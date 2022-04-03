@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mobile30-03</string>
+    <string name="enter_username_hint">Kullanıcı Adı Giriniz</string>
+    <string name="enter_password_hint">Şifre Giriniz</string>
+    <string name="sign_up_button">Kayıt Ol</string>
+    <string name="login_button">Giriş Yap</string>
+</resources>
