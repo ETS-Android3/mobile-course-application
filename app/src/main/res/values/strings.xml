@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Mobile30-03</string>
     <string name="enter_username_hint">Kullanıcı Adı Giriniz</string>
+    <string name="enter_mail_hint">E-mail Giriniz</string>
+    <string name="enter_phone_hint">Telefon Giriniz</string>
     <string name="enter_password_hint">Şifre Giriniz</string>
     <string name="sign_up_button">Kayıt Ol</string>
     <string name="login_button">Giriş Yap</string>
+    <string name="user_already_exists">Kullanıcı zaten mevcut.</string>
+    <string name="login_failed">Giriş yapılamadı.</string>
 </resources>

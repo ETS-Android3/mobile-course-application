@@ -20,10 +20,22 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="64dp"/>
+            android:layout_height="32dp" />
+
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="36dp"
+            android:text="@string/login_button"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
 
         <EditText
-            android:id="@+id/editTextUserName"
+            android:id="@+id/et_username"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:ems="12"
@@ -34,10 +46,10 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="24dp"/>
+            android:layout_height="24dp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/et_password"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:ems="12"
@@ -48,10 +60,10 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="24dp"/>
+            android:layout_height="24dp" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_button"
@@ -60,11 +72,11 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="24dp"/>
+            android:layout_height="24dp" />
 
 
         <Button
-            android:id="@+id/signupButton"
+            android:id="@+id/btn_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_up_button"
@@ -73,7 +85,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
