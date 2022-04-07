@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void loginClicked() {
         //TODO: RETURN TO PREVIOUS PAGE
-
+        finish();
     }
 
     private void registerClicked(String username, String password, String mail, String phone) {

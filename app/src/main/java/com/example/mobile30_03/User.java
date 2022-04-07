@@ -45,6 +45,7 @@ class AppUsers{
         users.add(new User("mehmet","mehme","1111@gmail.com","1221"));
         users.add(new User("faruk","faruka","2222@gmail.com","4554"));
         users.add(new User("admin","admin","furkanx54x@gmail.com","5435"));
+        users.add(new User("aslihant","421100","trhnaslhnt@gmail.com","5076538444"));
     }
 
 
