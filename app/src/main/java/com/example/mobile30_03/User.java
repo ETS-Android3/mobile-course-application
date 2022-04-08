@@ -40,6 +40,7 @@ class AppUsers{
     }
 
     static void populateUsers(){
+        users.add(new User("","","furkanaxcakaya2@gmail.com","5524969"));
         users.add(new User("furkan","1231","furkanaxcakaya@gmail.com","554969"));
         users.add(new User("ahmet","2332","1232@gmail.com","3223"));
         users.add(new User("mehmet","mehme","1111@gmail.com","1221"));

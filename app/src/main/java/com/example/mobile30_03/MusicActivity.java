@@ -50,6 +50,7 @@ public class MusicActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 seekTo = i;
+                tv_duration_current.setText(milliSecondsToTimer(seekTo * player.getDuration() / 100));
             }
 
             @Override
@@ -101,6 +102,15 @@ public class MusicActivity extends AppCompatActivity {
                 Log.i("Media Player", "now shuffling");
                 System.out.println(isShuffle);
                 btn_shuf.setColorFilter(R.color.blue);
+            }
+        });
+
+        btn_prev.setOnClickListener(view -> {
+            if (player.getCurrentPosition() / 1000 > 10){
+                Log.i("btn_prev",String.valueOf(player.getCurrentPosition()));
+                player.seekTo(0);
+            }else{
+                //TODO PREVIOUS MUSIC
             }
         });
     }
