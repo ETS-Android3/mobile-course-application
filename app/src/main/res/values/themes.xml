@@ -18,4 +18,10 @@
         <item name="android:textColorHint">@color/grey</item>
 <!--        <item name="android:editTextBackground">@android:color/transparent</item>-->
     </style>
+    <style name="Theme.Mobile3003.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Mobile3003.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Mobile3003.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

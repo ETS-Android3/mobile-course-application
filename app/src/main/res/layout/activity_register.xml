@@ -10,7 +10,7 @@
     android:gravity="top|center"
     android:orientation="vertical"
     android:padding="24dp"
-    tools:context=".RegisterActivity">
+    tools:context=".auth.RegisterActivity">
 
 
     <Space

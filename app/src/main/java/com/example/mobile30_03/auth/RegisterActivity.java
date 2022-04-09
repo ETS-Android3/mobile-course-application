@@ -1,7 +1,9 @@
-package com.example.mobile30_03;
+package com.example.mobile30_03.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegisterActivity extends AppCompatActivity {
+import com.example.mobile30_03.models.AppUsers;
+import com.example.mobile30_03.models.User;
+import com.example.mobile30_03.music.HomeActivity;
+import com.example.mobile30_03.R;
 
+public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
         EditText et_phone = (EditText) findViewById(R.id.et_phone);
         Button btn_login = (Button) findViewById(R.id.btn_login);
         Button btn_signup = (Button) findViewById(R.id.btn_signup);
-
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void loginClicked() {
-        //TODO: RETURN TO PREVIOUS PAGE
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
         finish();
     }
 
@@ -51,8 +57,10 @@ public class RegisterActivity extends AppCompatActivity {
             intent.putExtra("userId",  register);
             intent.putExtra("type",  "Kayıt");
             startActivity(intent);
+            finish();
         }else{
             Toast.makeText(this, R.string.user_already_exists, Toast.LENGTH_SHORT).show();
         }
     }
+
 }

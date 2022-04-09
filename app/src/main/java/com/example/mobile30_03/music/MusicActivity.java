@@ -1,18 +1,16 @@
-package com.example.mobile30_03;
+package com.example.mobile30_03.music;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-import android.media.AudioRouting;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.mobile30_03.R;
 
 public class MusicActivity extends AppCompatActivity {
     ImageButton btn_shuf;
@@ -66,7 +64,8 @@ public class MusicActivity extends AppCompatActivity {
 
         btn_play.setOnClickListener(view -> {
             if (player.isPlaying()){
-                handler.removeCallbacks(updater);
+                //Remove handler callbacks when music stops
+                handler.removeCallbacks(myUpdater);
                 player.pause();
                 //player.prepareAsync();
                 btn_play.setImageResource(R.drawable.ic_baseline_play_circle_filled);
@@ -115,23 +114,23 @@ public class MusicActivity extends AppCompatActivity {
         });
     }
 
-    private Runnable updater=new Runnable() {
+
+    //SEEKBAR Updater with Runnable & Handler
+    private void updateSeekBar(){
+        if(player.isPlaying()){
+            sb_media.setProgress((int)(((float) player.getCurrentPosition()/player.getDuration())*100));
+            handler.postDelayed(myUpdater,1000);
+        }
+    }
+    private class Updater implements Runnable{
         @Override
         public void run() {
             updateSeekBar();
             long currentDuration=player.getCurrentPosition();
             tv_duration_current.setText(milliSecondsToTimer(currentDuration));
         }
-    };
-
-    private void updateSeekBar(){
-        if(player.isPlaying()){
-            sb_media.setProgress((int)(((float) player.getCurrentPosition()/player.getDuration())*100));
-            handler.postDelayed(updater,1000);
-        }
     }
-
-
+    private Runnable myUpdater = new Updater();
 
     private String milliSecondsToTimer(long milliSeconds){
         String timerString="";
@@ -151,9 +150,6 @@ public class MusicActivity extends AppCompatActivity {
         timerString=timerString+minutes+":"+secondString;
         return timerString;
     }
-
-//    class SeekBarHandler extends AsyncTask<>{
-//    }
 }
 
 /*TODO 1:

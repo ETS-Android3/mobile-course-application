@@ -5,39 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".HomeActivity">
+    tools:context=".music.HomeActivity">
 
-
-    <TextView
-        android:id="@+id/tv_welcome"
+    <GridView
+        android:id="@+id/gv_songs"
+        android:numColumns="2"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="24dp"
-        android:textSize="36sp"
-        />
-
-    <Button
-        android:id="@+id/btn_music"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/music"/>
-    <Button
-        android:id="@+id/btn_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dosya"/>
-
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="24dp">
-        <TextView
-            android:id="@+id/tv_songlist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
-    </ScrollView>
-
+        android:horizontalSpacing="50dp"
+        android:verticalSpacing="50dp"
+        android:listSelector="#0f0"/>
 </LinearLayout>
