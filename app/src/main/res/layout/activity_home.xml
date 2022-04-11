@@ -3,17 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context=".music.HomeActivity">
-
-    <GridView
-        android:id="@+id/gv_songs"
-        android:numColumns="2"
-        android:clickable="true"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_songlist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:horizontalSpacing="50dp"
-        android:verticalSpacing="50dp"
-        android:listSelector="#0f0"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

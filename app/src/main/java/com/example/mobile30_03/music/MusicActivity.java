@@ -2,6 +2,7 @@ package com.example.mobile30_03.music;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.mobile30_03.R;
+import com.example.mobile30_03.models.Music;
+
+import java.io.Serializable;
 
 public class MusicActivity extends AppCompatActivity {
     ImageButton btn_shuf;
@@ -30,6 +34,9 @@ public class MusicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
+
+        Intent incomingIntent = getIntent();
+
 
         player = MediaPlayer.create(this, R.raw.sound);
         btn_shuf = findViewById(R.id.btn_shuf);
