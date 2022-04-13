@@ -1,16 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="16dp">
-    <TextView
-        android:id="@+id/tv_view_holder_instance"
-        style="@style/TextAppearance.AppCompat.Title.Inverse"
+    <ImageView
+        android:layout_gravity="start"
+        android:id="@+id/iv_album_cover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:fontFamily="monospace"
-        android:textColor="#fff"
-        tools:text="ViewHolder instance: 7" />
-</FrameLayout>
+        android:src="@drawable/ic_baseline_play_circle_filled"/>
+    <Space
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_song_name"
+            style="@style/TextAppearance.AppCompat.Title.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:layout_gravity="center_vertical|start"
+            android:fontFamily="monospace"
+            android:textColor="#fff"
+            tools:text="SONG NAMENAMENAMENAME HERE" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_song_artist"
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical|start"
+                android:fontFamily="monospace"
+                android:textColor="#fff"
+                tools:text="ARTIST NAME" />
+            <Space
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_song_duration"
+                style="@style/TextAppearance.AppCompat.Title.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_gravity="center_vertical|end"
+                android:fontFamily="monospace"
+                android:textColor="#fff"
+                tools:text="04:55" />
+        </LinearLayout>
+    </LinearLayout>
+    <Space
+        android:layout_width="12dp"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_gravity="end"
+        android:id="@+id/iv_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_favorite_border"/>
+</LinearLayout>

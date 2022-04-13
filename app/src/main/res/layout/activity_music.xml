@@ -10,6 +10,24 @@
     tools:context=".music.MusicActivity">
 
 
+    <TextView
+        android:id="@+id/tv_song_name"
+        android:paddingLeft="12dp"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Title.Inverse"
+        android:text="Song Name Here"/>
+
+    <TextView
+        android:id="@+id/tv_artist_name"
+        android:paddingLeft="12dp"
+        android:layout_gravity="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:text="Artist Name"/>
 
     <Space
         android:layout_width="wrap_content"

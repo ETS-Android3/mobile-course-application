@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,17 +18,16 @@ import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHolder> {
     private static final String TAG = SongsAdapter.class.getSimpleName();
-    final private ListItemClickListener mOnClickListener;
-    private static int viewHolderCount;
-    private int mNumberItems;
     private List<Music> songs;
 
+    final private ListItemClickListener mOnClickListener;
+    private int mNumberItems;
 
-    public SongsAdapter(int numberOfItems, ListItemClickListener listener, List<Music> rvSongs) {
-        mNumberItems = numberOfItems;
+
+    public SongsAdapter(ListItemClickListener listener, List<Music> rvSongs) {
+        mNumberItems = rvSongs.size();
         mOnClickListener = listener;
         songs = rvSongs;
-        viewHolderCount = 0;
     }
 
     @NonNull
@@ -41,17 +41,42 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
 
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
         MusicViewHolder viewHolder = new MusicViewHolder(view);
-
-        viewHolderCount++;
-        Log.d(TAG, "onCreateViewHolder: number of ViewHolders created: "
-                + viewHolderCount);
         return viewHolder;
+    }
+
+    private String milliSecondsToTimer(long milliSeconds){
+        String timerString="";
+        String secondString;
+        int hour=(int) (milliSeconds/(1000*60*60));
+        int minutes=(int)(milliSeconds%(1000*60*60))/(1000*60);
+        int seconds=(int)((milliSeconds%(1000*60*60))%(1000*60)/1000);
+        if(hour>0){
+            timerString=hour+":";
+        }
+        if(seconds<10){
+            secondString="0"+seconds;
+        }
+        else {
+            secondString=""+seconds;
+        }
+        timerString=timerString+minutes+":"+secondString;
+        return timerString;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
-        holder.viewHolderIndex.setText(songs.get(position).getSong_name());
-        Log.d(TAG, "#" + position);
+        holder.tv_song_name.setText(songs.get(position).getSong_name());
+        holder.tv_song_duration.setText(milliSecondsToTimer(songs.get(position).getDuration()));
+        holder.tv_song_artist.setText(songs.get(position).getArtist_name());
+        holder.iv_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        
+        holder.bind();
+//        Log.d(TAG, "#" + position);
     }
 
     @Override
@@ -63,19 +88,27 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
         void onListItemClick(int clickedItemIndex);
     }
 
+    public interface FavoriteItemClickListener{
+        void onFavoriteItemClick(int clickedItemIndex);
+    }
+
 
 
     class MusicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        // Will display the position in the list, ie 0 through getItemCount() - 1
-        TextView listItemNumberView;
-        // Will display which ViewHolder is displaying this data
-        TextView viewHolderIndex;
+        TextView tv_song_name;
+        TextView tv_song_duration;
+        TextView tv_song_artist;
+        ImageView iv_album_cover;
+        ImageView iv_favorite;
 
         public MusicViewHolder(View itemView) {
             super(itemView);
-            viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
-            // COMPLETED (7) Call setOnClickListener on the View passed into the constructor (use 'this' as the OnClickListener)
+            tv_song_name = (TextView) itemView.findViewById(R.id.tv_song_name);
+            tv_song_duration = (TextView) itemView.findViewById(R.id.tv_song_duration);
+            tv_song_artist = (TextView) itemView.findViewById(R.id.tv_song_artist);
+            iv_album_cover = (ImageView) itemView.findViewById(R.id.iv_album_cover);
+            iv_favorite = (ImageView) itemView.findViewById(R.id.iv_favorite);
             itemView.setOnClickListener(this);
         }
 
@@ -83,7 +116,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
+        }
 
+        public void bind() {
         }
     }
 }
+

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;
 
 import java.io.Serializable;
+import java.net.URI;
 
 public class MusicActivity extends AppCompatActivity {
     ImageButton btn_shuf;
@@ -26,6 +28,8 @@ public class MusicActivity extends AppCompatActivity {
     MediaPlayer player;
     TextView tv_duration_current;
     TextView tv_duration_total;
+    TextView tv_artist_name;
+    TextView tv_song_name;
 
     private Handler handler =new Handler();
 
@@ -36,9 +40,21 @@ public class MusicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_music);
 
         Intent incomingIntent = getIntent();
+        String sfafas = incomingIntent.getStringExtra("uri");
+        Log.i("aaa",sfafas);
 
+        Music currentSong = new Music(
+                Uri.parse(incomingIntent.getStringExtra("uri")),
+                incomingIntent.getStringExtra("sng"),
+                incomingIntent.getStringExtra("art"),
+                incomingIntent.getStringExtra("dsp"),
+//                incomingIntent.getStringExtra("alb"),
+                incomingIntent.getIntExtra("dur",0)
 
-        player = MediaPlayer.create(this, R.raw.sound);
+        );
+
+//        player = MediaPlayer.create(this, R.raw.sound);
+        player = MediaPlayer.create(this, currentSong.getUri());
         btn_shuf = findViewById(R.id.btn_shuf);
         btn_prev = findViewById(R.id.btn_prev);
         btn_play = findViewById(R.id.btn_play);
@@ -47,8 +63,14 @@ public class MusicActivity extends AppCompatActivity {
         sb_media = findViewById(R.id.sb_media);
         tv_duration_current = findViewById(R.id.tv_duration_current);
         tv_duration_total = findViewById(R.id.tv_duration_total);
+        tv_artist_name = findViewById(R.id.tv_artist_name);
+        tv_song_name = findViewById(R.id.tv_song_name);
 
         tv_duration_total.setText(milliSecondsToTimer(player.getDuration()));
+        tv_artist_name.setText(currentSong.getArtist_name());
+        tv_song_name.setText(currentSong.getSong_name());
+
+        play();
 
         sb_media.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int seekTo;
@@ -70,17 +92,7 @@ public class MusicActivity extends AppCompatActivity {
         });
 
         btn_play.setOnClickListener(view -> {
-            if (player.isPlaying()){
-                //Remove handler callbacks when music stops
-                handler.removeCallbacks(myUpdater);
-                player.pause();
-                //player.prepareAsync();
-                btn_play.setImageResource(R.drawable.ic_baseline_play_circle_filled);
-            }else{
-                player.start();
-                btn_play.setImageResource(R.drawable.ic_baseline_pause_circle_filled);
-                updateSeekBar();
-            }
+            play();
         });
 
         btn_loop.setOnClickListener(view -> {
@@ -121,6 +133,19 @@ public class MusicActivity extends AppCompatActivity {
         });
     }
 
+    private void play(){
+        if (player.isPlaying()){
+            //Remove handler callbacks when music stops
+            handler.removeCallbacks(myUpdater);
+            player.pause();
+            //player.prepareAsync();
+            btn_play.setImageResource(R.drawable.ic_baseline_play_circle_filled);
+        }else{
+            player.start();
+            btn_play.setImageResource(R.drawable.ic_baseline_pause_circle_filled);
+            updateSeekBar();
+        }
+    }
 
     //SEEKBAR Updater with Runnable & Handler
     private void updateSeekBar(){

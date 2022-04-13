@@ -3,6 +3,7 @@ package com.example.mobile30_03.music;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -47,10 +48,8 @@ public class HomeActivity extends AppCompatActivity
         mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
         mToast.show();
 
-
+        Log.i("onListItemClick",listSongs.get(clickedItemIndex).getUri().toString());
         musicClicked(listSongs.get(clickedItemIndex));
-
-
     }
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
@@ -110,7 +109,7 @@ public class HomeActivity extends AppCompatActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mNumbersList.setLayoutManager(layoutManager);
         mNumbersList.setHasFixedSize(true);
-        mAdapter = new SongsAdapter(listSongs.size(), this,listSongs);
+        mAdapter = new SongsAdapter( this,listSongs);
         mNumbersList.setAdapter(mAdapter);
     }
 
@@ -147,25 +146,56 @@ public class HomeActivity extends AppCompatActivity
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST);
             int durationColumn =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION);
+//            int albumIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID);
+
             while (cursor.moveToNext()) {
-                Log.i("Test", "next");
                 long id = cursor.getLong(idColumn);
                 String song_name = cursor.getString(songColumn);
                 String artist_name = cursor.getString(artistColumn);
                 String display_name = cursor.getString(displayColumn);
+//                long album_id = cursor.getLong(albumIdColumn);
                 int duration = cursor.getInt(durationColumn);
                 Uri contentUri = ContentUris.withAppendedId(
                         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+                String album_art = getCoverArtPath(this, id);
+                if (album_art != null){
+                    Log.i("Album art", album_art);
+                }else{
+                    Log.i("Album art", "NULL");
+                }
+
                 songs.add(new Music(contentUri, song_name,artist_name,display_name, duration));
             }
         }
         return songs;
     }
 
+    private static String getCoverArtPath(Context context, long androidAlbumId) {
+        String path = null;
+        Cursor c = context.getContentResolver().query(
+                MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Audio.Albums.ALBUM_ART},
+                MediaStore.Audio.Albums._ID + "=?",
+                new String[]{Long.toString(androidAlbumId)},
+                null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                path = c.getString(0);
+            }
+            c.close();
+        }
+        return path;
+    }
+
     private void musicClicked(Music song) {
         Log.d("btn_music", "Music clicked!");
         Intent intent = new Intent(this, MusicActivity.class);
-        intent.putExtra("song", song);
+        intent.putExtra("sng", song.getSong_name());
+        intent.putExtra("dur", song.getDuration());
+        intent.putExtra("uri", song.getUri().toString());
+        intent.putExtra("art", song.getArtist_name());
+        intent.putExtra("dsp", song.getDisplay_name());
+//        intent.putExtra("alb", song.getAlbum_art());
         startActivity(intent);
     }
 

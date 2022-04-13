@@ -9,13 +9,15 @@ public class Music implements Serializable {
     private final String song_name;
     private final String artist_name;
     private final String display_name;
+//    private final String album_art;
     private final int duration;
 
-    public Music(Uri uri, String song_name,String artist_name, String display_name, int duration) {
+    public Music(Uri uri, String song_name,String artist_name, String display_name,  int duration) {
         this.uri = uri;
         this.song_name = song_name;
         this.artist_name = artist_name;
         this.display_name = display_name;
+//        this.album_art = album_art;
         this.duration = duration;
     }
 
@@ -38,4 +40,7 @@ public class Music implements Serializable {
     public String getDisplay_name() {
         return display_name;
     }
+//    public String getAlbum_art() {
+//        return album_art;
+//    }
 }

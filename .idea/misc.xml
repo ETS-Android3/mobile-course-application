@@ -3,11 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_favorite_filled.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_loop.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_pause_circle_filled.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_play_circle_filled.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_shuffle.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_skip_next.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_baseline_skip_previous.xml" value="0.124" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.124" />
         <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/layout/activity_home.xml" value="0.16799999999999998" />
         <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/layout/activity_music.xml" value="0.21422101449275363" />
         <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/layout/activity_register.xml" value="0.24010416666666667" />
-        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/layout/song_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Works/AndroidStudioProjects/Mobile3003/app/src/main/res/layout/song_item.xml" value="0.264" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.136" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.136" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/activity_home.xml" value="0.14" />
