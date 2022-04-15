@@ -3,7 +3,10 @@ package com.example.mobile30_03.music;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.AudioRouting;
 import android.media.MediaPlayer;
+import android.media.session.MediaSession;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +22,8 @@ import java.io.Serializable;
 import java.net.URI;
 
 public class MusicActivity extends AppCompatActivity {
+    //log tag
+    private static final String TAG = "MusicActivity";
     ImageButton btn_shuf;
     ImageButton btn_prev;
     ImageButton btn_play;
@@ -36,24 +41,14 @@ public class MusicActivity extends AppCompatActivity {
     boolean isShuffle = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_music);
 
         Intent incomingIntent = getIntent();
-        String sfafas = incomingIntent.getStringExtra("uri");
-        Log.i("aaa",sfafas);
+        Music currentSong = (Music) incomingIntent.getParcelableExtra("music");
 
-        Music currentSong = new Music(
-                Uri.parse(incomingIntent.getStringExtra("uri")),
-                incomingIntent.getStringExtra("sng"),
-                incomingIntent.getStringExtra("art"),
-                incomingIntent.getStringExtra("dsp"),
-//                incomingIntent.getStringExtra("alb"),
-                incomingIntent.getIntExtra("dur",0)
-
-        );
-
-//        player = MediaPlayer.create(this, R.raw.sound);
         player = MediaPlayer.create(this, currentSong.getUri());
         btn_shuf = findViewById(R.id.btn_shuf);
         btn_prev = findViewById(R.id.btn_prev);
@@ -72,24 +67,7 @@ public class MusicActivity extends AppCompatActivity {
 
         play();
 
-        sb_media.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int seekTo;
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                seekTo = i;
-                tv_duration_current.setText(milliSecondsToTimer(seekTo * player.getDuration() / 100));
-            }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                player.seekTo(seekTo * player.getDuration() / 100 );
-                tv_duration_current.setText(milliSecondsToTimer(seekTo * player.getDuration() / 100));
-            }
-        });
 
         btn_play.setOnClickListener(view -> {
             play();
@@ -146,7 +124,6 @@ public class MusicActivity extends AppCompatActivity {
             updateSeekBar();
         }
     }
-
     //SEEKBAR Updater with Runnable & Handler
     private void updateSeekBar(){
         if(player.isPlaying()){
@@ -154,6 +131,7 @@ public class MusicActivity extends AppCompatActivity {
             handler.postDelayed(myUpdater,1000);
         }
     }
+
     private class Updater implements Runnable{
         @Override
         public void run() {
@@ -162,6 +140,7 @@ public class MusicActivity extends AppCompatActivity {
             tv_duration_current.setText(milliSecondsToTimer(currentDuration));
         }
     }
+
     private Runnable myUpdater = new Updater();
 
     private String milliSecondsToTimer(long milliSeconds){
@@ -182,23 +161,5 @@ public class MusicActivity extends AppCompatActivity {
         timerString=timerString+minutes+":"+secondString;
         return timerString;
     }
+
 }
-
-/*TODO 1:
-    3 defa yanlis loginde disable -done
-    ad soyad-bday-phone-mail      -?
-    signup sonrasi mail gonder    -done
-    seekbar
-
-  TODO 2:
-    music listesi
-    liste ekrani
-    cardview or gridview
-    telefona dosylar yukle
-    listenin duzenlenebilmesi
-
-  TODO:
-    SPOTIFY
-    UI UX
-    BASIT
-*/

@@ -24,6 +24,7 @@ import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.AppUsers;
 import com.example.mobile30_03.models.Music;
 import com.example.mobile30_03.models.User;
+import com.example.mobile30_03.utils.MediaPlayerManager;
 import com.example.mobile30_03.utils.SongsAdapter;
 
 import java.io.Serializable;
@@ -31,32 +32,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class HomeActivity extends AppCompatActivity
-        implements SongsAdapter.ListItemClickListener{
-
+public class HomeActivity extends AppCompatActivity {
+    //log tag
+    private static final String TAG = "HomeActivity";
     private List<Music> listSongs;
     private SongsAdapter mAdapter;
     private RecyclerView mNumbersList;
-    private Toast mToast;
 
-    @Override
-    public void onListItemClick(int clickedItemIndex) {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-        String toastMessage = listSongs.get(clickedItemIndex).getSong_name() + " clicked.";
-        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-        mToast.show();
-
-        Log.i("onListItemClick",listSongs.get(clickedItemIndex).getUri().toString());
-        musicClicked(listSongs.get(clickedItemIndex));
-    }
+    //Create MediaPlayerManager
+    private MediaPlayerManager mediaPlayerManager = MediaPlayerManager.getInstance();
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     Log.i("requestPermissionLauncher isGranted", "audioMediaOperations");
-                    audioMediaOperations();
                 } else {
                     Log.i("requestPermissionLauncher isGranted NOT", "explain todo");
                     // Explain to the user that the feature is unavailable because the
@@ -71,7 +60,6 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         //Intent operations
         Intent intent = getIntent();
         int userId = intent.getIntExtra("userId", 1);
@@ -80,10 +68,8 @@ public class HomeActivity extends AppCompatActivity
         //Send welcome mail if log type is Register
         if (logType.equals("Kayıt")) sendMail(currentUser);
 
-
         //XML
         RecyclerView rv_songlist = findViewById(R.id.rv_songlist);
-
         //Read audio files from external storage
         //Permissions
         if (ContextCompat.checkSelfPermission(
@@ -103,13 +89,14 @@ public class HomeActivity extends AppCompatActivity
             requestPermissionLauncher.launch(
                     Manifest.permission.READ_EXTERNAL_STORAGE);
         }
-
+        //RecyclerView
+        mediaPlayerManager.setMusicList(listSongs);
 
         mNumbersList = (RecyclerView) findViewById(R.id.rv_songlist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mNumbersList.setLayoutManager(layoutManager);
         mNumbersList.setHasFixedSize(true);
-        mAdapter = new SongsAdapter( this,listSongs);
+        mAdapter = new SongsAdapter( listSongs);
         mNumbersList.setAdapter(mAdapter);
     }
 
@@ -146,23 +133,14 @@ public class HomeActivity extends AppCompatActivity
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST);
             int durationColumn =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION);
-//            int albumIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID);
-
             while (cursor.moveToNext()) {
                 long id = cursor.getLong(idColumn);
                 String song_name = cursor.getString(songColumn);
                 String artist_name = cursor.getString(artistColumn);
                 String display_name = cursor.getString(displayColumn);
-//                long album_id = cursor.getLong(albumIdColumn);
                 int duration = cursor.getInt(durationColumn);
                 Uri contentUri = ContentUris.withAppendedId(
                         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
-                String album_art = getCoverArtPath(this, id);
-                if (album_art != null){
-                    Log.i("Album art", album_art);
-                }else{
-                    Log.i("Album art", "NULL");
-                }
 
                 songs.add(new Music(contentUri, song_name,artist_name,display_name, duration));
             }
@@ -170,43 +148,13 @@ public class HomeActivity extends AppCompatActivity
         return songs;
     }
 
-    private static String getCoverArtPath(Context context, long androidAlbumId) {
-        String path = null;
-        Cursor c = context.getContentResolver().query(
-                MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                new String[]{MediaStore.Audio.Albums.ALBUM_ART},
-                MediaStore.Audio.Albums._ID + "=?",
-                new String[]{Long.toString(androidAlbumId)},
-                null);
-        if (c != null) {
-            if (c.moveToFirst()) {
-                path = c.getString(0);
-            }
-            c.close();
-        }
-        return path;
-    }
-
-    private void musicClicked(Music song) {
-        Log.d("btn_music", "Music clicked!");
-        Intent intent = new Intent(this, MusicActivity.class);
-        intent.putExtra("sng", song.getSong_name());
-        intent.putExtra("dur", song.getDuration());
-        intent.putExtra("uri", song.getUri().toString());
-        intent.putExtra("art", song.getArtist_name());
-        intent.putExtra("dsp", song.getDisplay_name());
-//        intent.putExtra("alb", song.getAlbum_art());
-        startActivity(intent);
-    }
-
-    @SuppressLint("DefaultLocale")
     private void sendMail(User user){
         Intent mailIntent = new Intent(Intent.ACTION_SEND);
         mailIntent.putExtra(Intent.EXTRA_EMAIL,user.email); //TODO: MAILI ALMIYOR
         mailIntent.putExtra(Intent.EXTRA_SUBJECT,String.format("ID: %d - Başarılı Kayıt", user.id));
         mailIntent.putExtra(Intent.EXTRA_TEXT,String.format("ID: %d - Username: %s \nPhone: %s", user.id, user.username, user.phoneNumber));
         mailIntent.setType("message/rfc822");
-        startActivity(mailIntent);
+        startActivity(Intent.createChooser(mailIntent, "Send email..."));
     }
 
 }

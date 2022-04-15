@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mobile3003</string>
+    <string name="app_name">Well Played</string>
     <string name="enter_username_hint">Kullanıcı Adı Giriniz</string>
     <string name="enter_mail_hint">E-mail Giriniz</string>
     <string name="enter_phone_hint">Telefon Giriniz</string>
