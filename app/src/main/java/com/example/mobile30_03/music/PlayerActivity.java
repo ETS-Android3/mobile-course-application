@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class PlayerActivity extends AppCompatActivity {
     ImageButton btn_play;
     ImageButton btn_next;
     ImageButton btn_loop;
+    ImageView iv_album_art;
     SeekBar sb_media;
     TextView tv_duration_current;
     TextView tv_duration_total;
@@ -56,16 +58,14 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
         findViewByIds();
+
 
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("position");
         Log.d(TAG, "onCreate: position: " + position);
 
         mediaPlayerInit(position);
-        updateSeekBar();
-        mediaUIInit();
 
         btn_play.setOnClickListener(v -> {
             if (mediaPlayerManager.getMediaPlayer().isPlaying()){
@@ -124,6 +124,7 @@ public class PlayerActivity extends AppCompatActivity {
         tv_duration_total = findViewById(R.id.tv_duration_total);
         tv_artist_name = findViewById(R.id.tv_artist_name);
         tv_song_name = findViewById(R.id.tv_song_name);
+        iv_album_art = findViewById(R.id.iv_album_art);
         btn_shuf = findViewById(R.id.btn_shuf);
         btn_prev = findViewById(R.id.btn_prev);
         btn_play = findViewById(R.id.btn_play);
@@ -144,7 +145,6 @@ public class PlayerActivity extends AppCompatActivity {
                 mediaPlayerInit(mediaPlayerManager.getCurrentSongIndex()+1);
             }
         });
-
         mediaUIInit();
     }
 
@@ -153,7 +153,7 @@ public class PlayerActivity extends AppCompatActivity {
         tv_artist_name.setText(currentMusic.getArtist_name());
         tv_duration_total.setText(milliSecondsToTimer(currentMusic.getDuration()));
         tv_song_name.setText(currentMusic.getSong_name());
-
+        iv_album_art.setImageResource(currentMusic.getArt());
         sb_media.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int seekTo;
             @Override
@@ -164,13 +164,26 @@ public class PlayerActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                handler.removeCallbacks(myUpdater);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mediaPlayerManager.getMediaPlayer().seekTo(seekTo * mediaPlayerManager.getMediaPlayer().getDuration() / 100 );
-                tv_duration_current.setText(milliSecondsToTimer(seekTo * mediaPlayerManager.getMediaPlayer().getDuration() / 100));
+//                tv_duration_current.setText(milliSecondsToTimer(seekTo * mediaPlayerManager.getMediaPlayer().getDuration() / 100));
+                updateSeekBar();
             }
         });
+        updateSeekBar();
     }
 }
+
+/*
+TODO,S:
+    Loop tuşu
+    Shuffler tuşu
+    Arkaplan falan
+    Geri dönüp tekrar aynı şarkıya tıkladığında baştan başlatmama
+    En sonda ve başta overflow*underflow checks
+    Playlist
+ */

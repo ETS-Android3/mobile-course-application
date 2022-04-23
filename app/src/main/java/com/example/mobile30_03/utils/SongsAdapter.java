@@ -1,6 +1,5 @@
 package com.example.mobile30_03.utils;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;
-import com.example.mobile30_03.music.MusicActivity;
 import com.example.mobile30_03.music.PlayerActivity;
 
 import java.util.List;
@@ -41,6 +39,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
+        holder.iv_album_cover.setImageResource(songs.get(position).getArt());
         holder.tv_song_name.setText(songs.get(position).getSong_name());
         holder.tv_song_duration.setText(HelperFunctions.milliSecondsToTimer(songs.get(position).getDuration()));
         holder.tv_song_artist.setText(songs.get(position).getArtist_name());

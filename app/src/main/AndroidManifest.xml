@@ -18,7 +18,7 @@
             android:name=".auth.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".music.MusicActivity"
+            android:name=".music.oldMusicActivity"
             android:exported="false" />
         <activity
             android:name=".auth.RegisterActivity"

@@ -1,17 +1,15 @@
 package com.example.mobile30_03.music;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -27,9 +25,9 @@ import com.example.mobile30_03.models.User;
 import com.example.mobile30_03.utils.MediaPlayerManager;
 import com.example.mobile30_03.utils.SongsAdapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends AppCompatActivity {
@@ -102,6 +100,16 @@ public class HomeActivity extends AppCompatActivity {
 
     private List<Music> audioMediaOperations(){
         List<Music> songs = new ArrayList<>();
+        List<Integer> drawables = new ArrayList<>();
+        drawables.add(R.drawable.image_one);
+        drawables.add(R.drawable.image_two);
+        drawables.add(R.drawable.image_three);
+        drawables.add(R.drawable.image_four);
+        drawables.add(R.drawable.image_five);
+        drawables.add(R.drawable.image_six);
+        drawables.add(R.drawable.image_seven);
+        drawables.add(R.drawable.image_eight);
+
         Uri collection = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
                 MediaStore.Audio.Media._ID,
@@ -141,8 +149,9 @@ public class HomeActivity extends AppCompatActivity {
                 int duration = cursor.getInt(durationColumn);
                 Uri contentUri = ContentUris.withAppendedId(
                         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
-
-                songs.add(new Music(contentUri, song_name,artist_name,display_name, duration));
+                int random = new Random().nextInt(drawables.size());
+                int art = drawables.get(random);
+                songs.add(new Music(contentUri, song_name,artist_name,display_name, art, duration));
             }
         }
         return songs;
