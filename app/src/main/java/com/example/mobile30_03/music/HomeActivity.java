@@ -24,6 +24,7 @@ import com.example.mobile30_03.models.Music;
 import com.example.mobile30_03.models.User;
 import com.example.mobile30_03.utils.MediaPlayerManager;
 import com.example.mobile30_03.utils.SongsAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class HomeActivity extends AppCompatActivity {
     //log tag
     private static final String TAG = "HomeActivity";
-    private List<Music> listSongs;
+    private List<Music> listSongs = new ArrayList<>();
     private SongsAdapter mAdapter;
     private RecyclerView mNumbersList;
 
@@ -44,13 +45,9 @@ public class HomeActivity extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     Log.i("requestPermissionLauncher isGranted", "audioMediaOperations");
+                    listSongs = audioMediaOperations();
                 } else {
                     Log.i("requestPermissionLauncher isGranted NOT", "explain todo");
-                    // Explain to the user that the feature is unavailable because the
-                    // features requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
                 }
             });
 
@@ -70,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView rv_songlist = findViewById(R.id.rv_songlist);
         //Read audio files from external storage
         //Permissions
+
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
@@ -77,11 +75,7 @@ public class HomeActivity extends AppCompatActivity {
             listSongs = audioMediaOperations();
         } else if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             Log.i("else if shouldShowRequestPermissionRationale", "TODO");
-            //TODO
-            // In an educational UI, explain to the user why your app requires this
-            // permission for a specific feature to behave as expected. In this UI,
-            // include a "cancel" or "no thanks" button that allows the user to
-            // continue using your app without granting the permission.
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
         } else {
             Log.i("else", "requestPermissionLauncher");
             requestPermissionLauncher.launch(
@@ -89,13 +83,14 @@ public class HomeActivity extends AppCompatActivity {
         }
         //RecyclerView
         mediaPlayerManager.setMusicList(listSongs);
-
-        mNumbersList = (RecyclerView) findViewById(R.id.rv_songlist);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mNumbersList.setLayoutManager(layoutManager);
-        mNumbersList.setHasFixedSize(true);
-        mAdapter = new SongsAdapter( listSongs);
-        mNumbersList.setAdapter(mAdapter);
+        if (listSongs.size() > 0) {
+            mNumbersList = (RecyclerView) findViewById(R.id.rv_songlist);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            mNumbersList.setLayoutManager(layoutManager);
+            mNumbersList.setHasFixedSize(true);
+            mAdapter = new SongsAdapter( listSongs);
+            mNumbersList.setAdapter(mAdapter);
+        }
     }
 
     private List<Music> audioMediaOperations(){
@@ -165,5 +160,6 @@ public class HomeActivity extends AppCompatActivity {
         mailIntent.setType("message/rfc822");
         startActivity(Intent.createChooser(mailIntent, "Send email..."));
     }
+
 
 }
