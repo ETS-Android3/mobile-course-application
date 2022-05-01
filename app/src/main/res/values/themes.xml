@@ -17,6 +17,8 @@
         <item name="android:editTextColor">@color/grey</item>
         <item name="android:textColorHint">@color/grey</item>
 <!--        <item name="android:editTextBackground">@android:color/transparent</item>-->
+<!--        FONT-->
+        <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
     <style name="Theme.Mobile3003.NoActionBar">
         <item name="windowActionBar">false</item>

@@ -12,19 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobile3003" >
         <activity
+            android:name=".music.WellPlayedActivity"
+            android:exported="false" />
+        <activity
             android:name=".music.PlayerActivity"
             android:exported="false" />
         <activity
             android:name=".auth.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".music.oldMusicActivity"
-            android:exported="false" />
-        <activity
             android:name=".auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".music.HomeActivity"
+            android:name=".auth.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
