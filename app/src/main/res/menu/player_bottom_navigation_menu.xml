@@ -3,11 +3,14 @@
 
     <item
         android:id="@+id/songsFragment"
+        android:icon="@drawable/allsong_clip"
         android:title="allsongs" />
     <item
         android:id="@+id/playerFragment"
+        android:icon="@drawable/player_clip"
         android:title="player" />
     <item
         android:id="@+id/playlistFragment"
+        android:icon="@drawable/playlist_clip"
         android:title="playlists" />
 </menu>
