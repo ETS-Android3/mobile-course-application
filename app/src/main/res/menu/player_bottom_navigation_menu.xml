@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/songsFragment"
+        android:title="allsongs" />
+    <item
+        android:id="@+id/playerFragment"
+        android:title="player" />
+    <item
+        android:id="@+id/playlistFragment"
+        android:title="playlists" />
+</menu>
