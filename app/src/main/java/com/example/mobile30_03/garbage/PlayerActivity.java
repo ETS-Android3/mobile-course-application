@@ -1,19 +1,17 @@
-package com.example.mobile30_03.music;
+package com.example.mobile30_03.garbage;
 
 import static com.example.mobile30_03.utils.HelperFunctions.milliSecondsToTimer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;

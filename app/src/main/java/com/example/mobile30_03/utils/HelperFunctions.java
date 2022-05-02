@@ -15,6 +15,7 @@ import com.example.mobile30_03.models.Music;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class HelperFunctions {
@@ -96,5 +97,10 @@ public class HelperFunctions {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int getRandomIndex(int size) {
+        Random random = new Random();
+        return random.nextInt(size);
     }
 }

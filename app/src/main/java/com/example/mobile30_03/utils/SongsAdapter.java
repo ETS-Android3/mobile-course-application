@@ -1,6 +1,5 @@
 package com.example.mobile30_03.utils;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile30_03.R;
+import com.example.mobile30_03.fragment.SongsFragmentDirections;
 import com.example.mobile30_03.models.Music;
-import com.example.mobile30_03.music.PlayerActivity;
 
 import java.util.List;
 
@@ -21,9 +22,10 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
     private static final String TAG = "SongsAdapter";
     private final List<Music> songs;
     private final int mNumberItems;
-
+    MediaPlayerManager mediaPlayerManager;
 
     public SongsAdapter( List<Music> rvSongs) {
+        mediaPlayerManager = MediaPlayerManager.getInstance();
         mNumberItems = rvSongs.size();
         songs = rvSongs;
     }
@@ -49,11 +51,8 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
                 });
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), PlayerActivity.class);
-            Music song = songs.get(position);
-            intent.putExtra("music", song);
-            intent.putExtra("position", position);
-            view.getContext().startActivity(intent);
+            NavDirections action = SongsFragmentDirections.songsToPlayer().setSongIndex(position);
+            Navigation.findNavController(view).navigate(action);
         });
 
     }

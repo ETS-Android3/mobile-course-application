@@ -18,14 +18,15 @@ public class MediaPlayerManager {
     private static MediaPlayerManager instance;
     private MediaPlayer mediaPlayer;
     private boolean isShuffle;
+    private boolean isLooping;
     private int currentSongIndex;
     private List<Music> musicList;
+    private List<Music> currentPlaylist;
 
     private MediaPlayerManager() {
         mediaPlayer = new MediaPlayer();
-        isShuffle = true;
+        isShuffle = false;
         currentSongIndex = 0;
-
     }
 
     public static MediaPlayerManager getInstance() {
@@ -46,21 +47,6 @@ public class MediaPlayerManager {
             mediaPlayer.pause();
         }
     }
-
-    public void stop() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
-    }
-
-    public void release() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
-
-    // getter and setter
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
@@ -75,7 +61,6 @@ public class MediaPlayerManager {
         this.mediaPlayer = MediaPlayer.create(context, musicList.get(index).getUri());
     }
 
-    //isshuffle get set
     public boolean isShuffle() {
         return isShuffle;
     }
@@ -84,16 +69,18 @@ public class MediaPlayerManager {
         isShuffle = shuffle;
     }
 
-    //currentsongindex get set
+    public boolean isLooping() {
+        return isLooping;
+    }
+
+    public void setLooping(boolean looping) {
+        isLooping = looping;
+    }
+
     public int getCurrentSongIndex() {
         return currentSongIndex;
     }
 
-    public void setCurrentSongIndex(int currentSongIndex) {
-        this.currentSongIndex = currentSongIndex;
-    }
-
-    //musiclist get set
     public List<Music> getMusicList() {
         return musicList;
     }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.mobile30_03.databinding.FragmentPlaylistBinding;
+
 public class PlaylistFragment extends Fragment {
     private String TAG = "PlaylistFragment";
     private FragmentPlaylistBinding binding;

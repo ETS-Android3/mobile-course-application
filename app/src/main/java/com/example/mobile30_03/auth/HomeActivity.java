@@ -1,38 +1,22 @@
 package com.example.mobile30_03.auth;
 
 import android.Manifest;
-import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.AppUsers;
-import com.example.mobile30_03.models.Music;
 import com.example.mobile30_03.models.User;
-import com.example.mobile30_03.music.WellPlayedActivity;
-import com.example.mobile30_03.utils.MediaPlayerManager;
-import com.example.mobile30_03.utils.SongsAdapter;
+import com.example.mobile30_03.WellPlayedActivity;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";

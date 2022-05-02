@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobile3003" >
         <activity
-            android:name=".music.WellPlayedActivity"
+            android:name=".WellPlayedActivity"
             android:exported="false" />
         <activity
-            android:name=".music.PlayerActivity"
+            android:name=".garbage.PlayerActivity"
             android:exported="false" />
         <activity
             android:name=".auth.LoginActivity"

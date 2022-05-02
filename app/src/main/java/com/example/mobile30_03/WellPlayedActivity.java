@@ -1,13 +1,11 @@
-package com.example.mobile30_03.music;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
+package com.example.mobile30_03;
 
 import android.os.Bundle;
 
-import com.example.mobile30_03.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
 import com.example.mobile30_03.databinding.ActivityWellPlayedBinding;
 
 public class WellPlayedActivity extends AppCompatActivity {
