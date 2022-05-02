@@ -18,9 +18,9 @@ import com.example.mobile30_03.music.PlayerActivity;
 import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHolder> {
-    private static final String TAG = SongsAdapter.class.getSimpleName();
-    private List<Music> songs;
-    private int mNumberItems;
+    private static final String TAG = "SongsAdapter";
+    private final List<Music> songs;
+    private final int mNumberItems;
 
 
     public SongsAdapter( List<Music> rvSongs) {
@@ -33,16 +33,29 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
     public MusicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.c_song_item, parent, false);
-        MusicViewHolder viewHolder = new MusicViewHolder(view);
-        return viewHolder;
+        return new MusicViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
-        holder.iv_album_cover.setImageResource(songs.get(position).getArt());
+        Music music = songs.get(position);
+        holder.iv_album_cover.setImageBitmap(HelperFunctions.getBitmapFromContentURI(holder.itemView.getContext(), music.getUri()));
         holder.tv_song_name.setText(songs.get(position).getSong_name());
         holder.tv_song_duration.setText(HelperFunctions.milliSecondsToTimer(songs.get(position).getDuration()));
         holder.tv_song_artist.setText(songs.get(position).getArtist_name());
+
+        holder.iv_favorite.setOnClickListener(view -> {
+                    Log.d(TAG, "onClick: favorite clicked");
+                });
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), PlayerActivity.class);
+            Music song = songs.get(position);
+            intent.putExtra("music", song);
+            intent.putExtra("position", position);
+            view.getContext().startActivity(intent);
+        });
+
     }
 
 
@@ -52,14 +65,12 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
     }
 
 
-    class MusicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+    class MusicViewHolder extends RecyclerView.ViewHolder {
         TextView tv_song_name;
         TextView tv_song_duration;
         TextView tv_song_artist;
         ImageView iv_album_cover;
         ImageView iv_favorite;
-
         public MusicViewHolder(View itemView) {
             super(itemView);
             tv_song_name = (TextView) itemView.findViewById(R.id.tv_song_name);
@@ -67,22 +78,6 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
             tv_song_artist = (TextView) itemView.findViewById(R.id.tv_artist_name);
             iv_album_cover = (ImageView) itemView.findViewById(R.id.iv_album_art);
             iv_favorite = (ImageView) itemView.findViewById(R.id.iv_favorite);
-            itemView.setOnClickListener(this);
-            iv_favorite.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            int clickedPosition = getAdapterPosition();
-            if (view.getId() == iv_favorite.getId()){
-                Log.d(TAG, "onClick: favorite clicked");
-            }else{
-                Intent intent = new Intent(view.getContext(), PlayerActivity.class);
-                Music song = songs.get(clickedPosition);
-                intent.putExtra("music", song);
-                intent.putExtra("position", clickedPosition);
-                view.getContext().startActivity(intent);
-            }
         }
     }
 }

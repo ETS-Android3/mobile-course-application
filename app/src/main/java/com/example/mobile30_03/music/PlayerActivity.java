@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;
+import com.example.mobile30_03.utils.HelperFunctions;
 import com.example.mobile30_03.utils.MediaPlayerManager;
 
 public class PlayerActivity extends AppCompatActivity {
@@ -153,7 +154,8 @@ public class PlayerActivity extends AppCompatActivity {
         tv_artist_name.setText(currentMusic.getArtist_name());
         tv_duration_total.setText(milliSecondsToTimer(currentMusic.getDuration()));
         tv_song_name.setText(currentMusic.getSong_name());
-        iv_album_art.setImageResource(currentMusic.getArt());
+        iv_album_art.setImageBitmap(HelperFunctions.getBitmapFromContentURI(this, currentMusic.getUri()));
+
         sb_media.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int seekTo;
             @Override

@@ -7,17 +7,25 @@
 
     <fragment
         android:id="@+id/playerFragment"
-        android:name="com.example.mobile30_03.musicfragments.PlayerFragment"
+        android:name="com.example.mobile30_03.fragment.PlayerFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" />
     <fragment
         android:id="@+id/songsFragment"
-        android:name="com.example.mobile30_03.musicfragments.SongsFragment"
+        android:name="com.example.mobile30_03.fragment.SongsFragment"
         android:label="fragment_songs"
-        tools:layout="@layout/fragment_songs" />
+        tools:layout="@layout/fragment_songs" >
+        <action
+            android:id="@+id/songsToPlayer"
+            app:destination="@id/playerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/playlistFragment"
-        android:name="com.example.mobile30_03.musicfragments.PlaylistFragment"
+        android:name="com.example.mobile30_03.fragment.PlaylistFragment"
         android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" />
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/playlistToPlayer"
+            app:destination="@id/playerFragment" />
+    </fragment>
 </navigation>

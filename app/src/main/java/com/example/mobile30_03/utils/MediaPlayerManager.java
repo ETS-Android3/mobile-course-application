@@ -1,12 +1,18 @@
 package com.example.mobile30_03.utils;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.provider.MediaStore;
 
+import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MediaPlayerManager {
     private static MediaPlayerManager instance;
@@ -19,6 +25,7 @@ public class MediaPlayerManager {
         mediaPlayer = new MediaPlayer();
         isShuffle = true;
         currentSongIndex = 0;
+
     }
 
     public static MediaPlayerManager getInstance() {
@@ -103,4 +110,7 @@ public class MediaPlayerManager {
         return isShuffle;
     }
 
+    public void updateMusicList(Context context) {
+        musicList = HelperFunctions.audioMediaOperations(context);
+    }
 }

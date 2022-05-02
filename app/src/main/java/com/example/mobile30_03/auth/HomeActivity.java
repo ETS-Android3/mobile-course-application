@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("user", user);
                 startActivity(intent);
             }
-        }, 1500);
+        }, 400);
     }
 
     private void sendMail(User user){

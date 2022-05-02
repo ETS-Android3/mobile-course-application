@@ -1,4 +1,4 @@
-package com.example.mobile30_03.musicfragments;
+package com.example.mobile30_03.fragment;
 
 import android.os.Bundle;
 
@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mobile30_03.R;
-import com.example.mobile30_03.databinding.FragmentPlayerBinding;
 import com.example.mobile30_03.models.Music;
 import com.example.mobile30_03.utils.HelperFunctions;
 import com.example.mobile30_03.utils.MediaPlayerManager;

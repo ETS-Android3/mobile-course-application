@@ -1,25 +1,21 @@
-package com.example.mobile30_03.musicfragments;
+package com.example.mobile30_03.fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mobile30_03.R;
-import com.example.mobile30_03.databinding.FragmentPlaylistBinding;
+import androidx.fragment.app.Fragment;
 
 public class PlaylistFragment extends Fragment {
+    private String TAG = "PlaylistFragment";
     private FragmentPlaylistBinding binding;
-
     public PlaylistFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentPlaylistBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 }

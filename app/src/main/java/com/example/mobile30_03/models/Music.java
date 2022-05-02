@@ -10,15 +10,13 @@ public class Music implements Parcelable{
     private final String song_name;
     private final String artist_name;
     private final String display_name;
-    private final int art;
     private final int duration;
 
-    public Music(Uri uri, String song_name, String artist_name, String display_name, int art, int duration) {
+    public Music(Uri uri, String song_name, String artist_name, String display_name, int duration) {
         this.uri = uri;
         this.song_name = song_name;
         this.artist_name = artist_name;
         this.display_name = display_name;
-        this.art = art;
         this.duration = duration;
     }
 
@@ -42,9 +40,6 @@ public class Music implements Parcelable{
         return display_name;
     }
 
-    public int getArt() {
-        return art;
-    }
 
     @Override
     public int describeContents() {
@@ -57,7 +52,6 @@ public class Music implements Parcelable{
         dest.writeString(this.song_name);
         dest.writeString(this.artist_name);
         dest.writeString(this.display_name);
-        dest.writeInt(this.art);
         dest.writeInt(this.duration);
     }
 
@@ -66,7 +60,6 @@ public class Music implements Parcelable{
         this.song_name = in.readString();
         this.artist_name = in.readString();
         this.display_name = in.readString();
-        this.art = in.readInt();
         this.duration = in.readInt();
     }
 
