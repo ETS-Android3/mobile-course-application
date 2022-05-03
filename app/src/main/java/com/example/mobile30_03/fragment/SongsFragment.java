@@ -3,7 +3,6 @@ package com.example.mobile30_03.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +40,7 @@ public class SongsFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mSongList.setLayoutManager(layoutManager);
         mSongList.setHasFixedSize(true);
-        mAdapter = new SongsAdapter(mediaPlayerManager.getMusicList());
+        mAdapter = new SongsAdapter(mediaPlayerManager.getAllSongs());
         mSongList.setAdapter(mAdapter);
 
         return binding.getRoot();

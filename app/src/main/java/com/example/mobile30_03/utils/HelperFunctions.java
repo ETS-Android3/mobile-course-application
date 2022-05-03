@@ -7,10 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 
-import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;
 
 import java.util.ArrayList;

@@ -13,6 +13,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@drawable/bottombarselector"
+        app:itemTextAppearance="@style/BottomNavigationItemTextAppearance"
+        app:itemTextAppearanceActive="@style/BottomNavigationItemTextAppearance.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationItemTextAppearance"
         app:menu="@menu/player_bottom_navigation_menu" />
 
     <androidx.fragment.app.FragmentContainerView
