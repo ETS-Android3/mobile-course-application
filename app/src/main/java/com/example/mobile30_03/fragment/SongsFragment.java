@@ -34,7 +34,7 @@ public class SongsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         binding = FragmentSongsBinding.inflate(inflater,container,false);
 
-        mediaPlayerManager.updateMusicList(getActivity());
+        mediaPlayerManager.fetchAllSongs(getActivity());
 
         mSongList = binding.rvSongs;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

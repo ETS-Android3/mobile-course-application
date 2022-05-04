@@ -3,7 +3,9 @@ package com.example.mobile30_03.utils;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+import com.example.mobile30_03.R;
 import com.example.mobile30_03.models.Music;
+import com.example.mobile30_03.models.Playlist;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public class MediaPlayerManager {
     private boolean isLooping;
     private int currentSongIndex;
     private List<Music> allSongs;
-    private List<Music> currentPlaylist;
+    private Playlist currentPlaylist;
 
     private MediaPlayerManager() {
         mediaPlayer = new MediaPlayer();
@@ -30,16 +32,13 @@ public class MediaPlayerManager {
     }
 
     public void play() {
-        if (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
     }
 
     public void pause() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-        }
+        if (mediaPlayer.isPlaying()) mediaPlayer.pause();
     }
+
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
@@ -51,7 +50,7 @@ public class MediaPlayerManager {
             e.printStackTrace();
         }
         this.currentSongIndex = index;
-        this.mediaPlayer = MediaPlayer.create(context, allSongs.get(index).getUri());
+        this.mediaPlayer = MediaPlayer.create(context, currentPlaylist.getSongs().get(index).getUri());
     }
 
     public boolean isShuffle() {
@@ -78,10 +77,6 @@ public class MediaPlayerManager {
         return allSongs;
     }
 
-    public void setAllSongs(List<Music> allSongs) {
-        this.allSongs = allSongs;
-    }
-
     public boolean isPlaying() {
         return mediaPlayer.isPlaying();
     }
@@ -90,8 +85,16 @@ public class MediaPlayerManager {
         return isShuffle;
     }
 
-    public void updateMusicList(Context context) {
+    public void fetchAllSongs(Context context) {
         allSongs = HelperFunctions.audioMediaOperations(context);
+        currentPlaylist = new Playlist("All Songs", "All songs on device.", R.drawable.allsong_clip,allSongs);
     }
 
+    public Playlist getCurrentPlaylist() {
+        return currentPlaylist;
+    }
+
+    public void setCurrentPlaylist(Playlist currentPlaylist) {
+        this.currentPlaylist = currentPlaylist;
+    }
 }

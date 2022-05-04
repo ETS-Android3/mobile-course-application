@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="4dp"
+    android:paddingStart="6dp"
+    android:paddingEnd="6dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvPlaylist"
@@ -23,8 +25,9 @@
 
             <ImageView
                 android:id="@+id/ivPlaylist"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="#D6D6D6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:background="#00FFFFFF"
                 android:maxLines="1"
@@ -51,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="4dp"
                 android:background="#00FFFFFF"
                 android:maxLines="1"
                 android:text="Playlist Description ..... AKSJFNAJKFSAF"

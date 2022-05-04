@@ -3,6 +3,7 @@ package com.example.mobile30_03.auth;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -13,9 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.mobile30_03.R;
+import com.example.mobile30_03.WellPlayedActivity;
 import com.example.mobile30_03.models.AppUsers;
 import com.example.mobile30_03.models.User;
-import com.example.mobile30_03.WellPlayedActivity;
+import com.example.mobile30_03.utils.MediaPlayerManager;
 import com.google.android.material.snackbar.Snackbar;
 
 public class HomeActivity extends AppCompatActivity {
@@ -43,10 +45,11 @@ public class HomeActivity extends AppCompatActivity {
                 isGranted -> {
                     if (isGranted) {
                         //Granted
-                        Snackbar.make(findViewById(R.id.activity_home), "OH YES! THANKS FOR ALLOWING US", Snackbar.LENGTH_SHORT).show();
+                        tvPermission.setText(R.string.permissionGranted);
                         proceed(currentUser);
                     } else {
                         //Denied
+                        tvPermission.setText(R.string.permissionRationale);
                         Snackbar.make(findViewById(R.id.activity_home), "OH NO... WE ARE NOT ALLOWED", Snackbar.LENGTH_SHORT).show();
                     }
                 });
@@ -64,22 +67,8 @@ public class HomeActivity extends AppCompatActivity {
             requestReadWritePermission.launch(
                     Manifest.permission.READ_EXTERNAL_STORAGE);
         }
-
-
     }
 
-    private void proceed(User user) {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after 5 seconds
-                Intent intent = new Intent(HomeActivity.this, WellPlayedActivity.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-            }
-        }, 400);
-    }
 
     private void sendMail(User user){
         Intent mailIntent = new Intent(Intent.ACTION_SEND);
@@ -88,6 +77,27 @@ public class HomeActivity extends AppCompatActivity {
         mailIntent.putExtra(Intent.EXTRA_TEXT,String.format(getString(R.string.registerMailContent), user.id, user.username, user.phoneNumber));
         mailIntent.setType("message/rfc822");
         startActivity(Intent.createChooser(mailIntent, "Send email..."));
+    }
+
+    private void proceed(User user) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 5 seconds
+                MediaPlayerManager.getInstance().fetchAllSongs(getApplicationContext());
+                if (MediaPlayerManager.getInstance().getAllSongs().size() < 1){
+                    Snackbar.make(findViewById(R.id.activity_home), "No songs found. Please download and/or transfer some songs to the device.", Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(Color.RED)
+                            .setTextColor(Color.WHITE)
+                            .show();
+                }else{
+                    Intent intent = new Intent(HomeActivity.this, WellPlayedActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                }
+            }
+        }, 400);
     }
 
 }

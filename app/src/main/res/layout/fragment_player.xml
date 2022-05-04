@@ -20,7 +20,7 @@
 
 
         <TextView
-            android:id="@+id/tv_song_name"
+            android:id="@+id/tvSongName"
             style="@style/TextAppearance.AppCompat.Title.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:paddingEnd="0dp"/>
 
         <TextView
-            android:id="@+id/tv_artist_name"
+            android:id="@+id/tvArtistName"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/iv_album_art"
+        android:id="@+id/ivAlbumArt"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="48dp"

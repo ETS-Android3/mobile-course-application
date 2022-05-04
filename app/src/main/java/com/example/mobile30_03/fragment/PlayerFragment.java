@@ -37,11 +37,11 @@ public class PlayerFragment extends Fragment {
         int songIndex = getArguments() != null ? getArguments().getInt("songIndex") : -1;
 
         if(mediaPlayerManager.isPlaying() && mediaPlayerManager.getCurrentSongIndex() == songIndex){
-            currentSong = mediaPlayerManager.getAllSongs()
+            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()
                     .get(mediaPlayerManager.getCurrentSongIndex());
             mediaUIInit();
         }else if (songIndex == -1) {
-            currentSong = mediaPlayerManager.getAllSongs()
+            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()
                 .get(mediaPlayerManager.getCurrentSongIndex());
             mediaUIInit();
         } else {
@@ -73,7 +73,7 @@ public class PlayerFragment extends Fragment {
 
         binding.btnNext.setOnClickListener(view -> {
             if (mediaPlayerManager.isShuffle()){
-                int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getAllSongs().size());
+                int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().size());
                 mediaPlayerInit(randomIndex);
             }else{
                 mediaPlayerInit(mediaPlayerManager.getCurrentSongIndex()+1);
@@ -111,7 +111,7 @@ public class PlayerFragment extends Fragment {
         //mediaPlayer init
         mediaPlayerManager.setMediaPlayer(getContext(), position);
         mediaPlayerManager.play();
-        currentSong = mediaPlayerManager.getAllSongs().get(position);
+        currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs().get(position);
         mediaUIInit();
 
         mediaPlayerManager.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -123,7 +123,7 @@ public class PlayerFragment extends Fragment {
                     mediaPlayerManager.getMediaPlayer().start();
                 }
                 else if (mediaPlayerManager.isShuffle()){
-                    int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getAllSongs().size());
+                    int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().size());
                     mediaPlayerInit(randomIndex);
                 }
                 else{
