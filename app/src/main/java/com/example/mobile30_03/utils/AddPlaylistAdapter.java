@@ -24,7 +24,7 @@ public class AddPlaylistAdapter extends RecyclerView.Adapter<AddPlaylistAdapter.
 
     public AddPlaylistAdapter(RSong song, PopupWindow popupWindow) {
         this.song = song;
-        this.playlists = MediaPlayerManager.getInstance().getAllRPlaylists();
+        this.playlists = db.wpDao().getAllPlaylists();
         this.popupWindow = popupWindow;
         //TODO: add a listener to update the list when a playlist is added
     }

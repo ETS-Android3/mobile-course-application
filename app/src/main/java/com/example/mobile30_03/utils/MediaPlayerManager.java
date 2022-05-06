@@ -3,11 +3,12 @@ package com.example.mobile30_03.utils;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.example.mobile30_03.database.AppDatabase;
 import com.example.mobile30_03.database.RPlaylist;
 import com.example.mobile30_03.database.RSong;
-import com.example.mobile30_03.models.Playlist;
+import com.example.mobile30_03.database.relations.PlaylistsWithSongs;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ public class MediaPlayerManager {
     private MediaPlayer mediaPlayer;
     private boolean isShuffle;
     private boolean isLooping;
-    private int currentSongIndex;
     private List<RSong> allRSongs;
-    private Playlist currentPlaylist;
-    private List<RPlaylist> allRPlaylists;
+    private List<RSong> currentlyPlaying;
+    private int currentSongIndex;
+
+    private int currentPlaylistId;
+
 
     private MediaPlayerManager() {
         mediaPlayer = new MediaPlayer();
@@ -53,7 +56,7 @@ public class MediaPlayerManager {
             e.printStackTrace();
         }
         this.currentSongIndex = index;
-        this.mediaPlayer = MediaPlayer.create(context, Uri.parse(currentPlaylist.getSongs()[index].uri));
+        this.mediaPlayer = MediaPlayer.create(context, Uri.parse(currentlyPlaying.get(index).uri));
     }
 
     public boolean isShuffle() {
@@ -93,22 +96,37 @@ public class MediaPlayerManager {
     public void fetchPlayer(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         allRSongs = db.wpDao().getAllSongs();
-        allRPlaylists = db.wpDao().getAllPlaylists();
-    }
-
-    public void setCurrentPlaylist(Playlist playlist) {
-        currentPlaylist = playlist;
-    }
-
-    public Playlist getCurrentPlaylist() {
-        return currentPlaylist;
-    }
-
-    public List<RPlaylist> getAllRPlaylists() {
-        return allRPlaylists;
+        currentlyPlaying = allRSongs;
     }
 
     public List<RSong> getAllRSongs() {
         return allRSongs;
+    }
+
+    public List<RSong> getCurrentlyPlaying() {
+        return currentlyPlaying;
+    }
+
+    public void setPlaylist(int id, Context context) {
+        AppDatabase db = AppDatabase.getInstance(context);
+        if (id > 0){
+            if (AppDatabase.getInstance(context).wpDao().
+                    getSongsOfPlaylist(id).get(0).rSongs.size() > 0) {
+                //play from playlist
+                currentlyPlaying = AppDatabase.getInstance(context).wpDao().getSongsOfPlaylist(id)
+                        .get(0).rSongs;
+                currentPlaylistId = id;
+                setMediaPlayer(context, 0);
+            }else {
+                Toast.makeText(context, "No songs in this playlist", Toast.LENGTH_SHORT).show();
+                //play from all songs
+                currentlyPlaying = allRSongs;
+                currentPlaylistId = -1;
+            }
+        }else{
+            //play from all songs
+            currentlyPlaying = allRSongs;
+            currentPlaylistId = -1;
+        }
     }
 }

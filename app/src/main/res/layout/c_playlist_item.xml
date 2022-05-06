@@ -44,7 +44,7 @@
                 android:maxLines="1"
                 android:text="PlaylistName"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/ivMore"
+                app:layout_constraintEnd_toStartOf="@+id/ivDelete"
                 app:layout_constraintStart_toEndOf="@+id/ivPlaylist"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +60,7 @@
                 android:text="Playlist Description ..... AKSJFNAJKFSAF"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ivMore"
+                app:layout_constraintEnd_toStartOf="@+id/ivDelete"
                 app:layout_constraintStart_toEndOf="@+id/ivPlaylist" />
 
             <TextView
@@ -76,7 +76,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/ivMore"
+                android:id="@+id/ivDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -85,7 +85,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvPlaylistName"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/more_clip" />
+                app:srcCompat="@drawable/delete_clip" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

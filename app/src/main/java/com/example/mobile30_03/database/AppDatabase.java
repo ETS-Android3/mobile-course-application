@@ -8,7 +8,10 @@ import androidx.room.RoomDatabase;
 
 import com.example.mobile30_03.database.relations.SongPlaylistCrossRef;
 
-@Database(entities = {RUser.class, RPlaylist.class, RSong.class, SongPlaylistCrossRef.class}, version = 1, exportSchema = false)
+@Database(
+        entities = {RUser.class, RPlaylist.class, RSong.class, SongPlaylistCrossRef.class},
+        version = 1,
+        exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "wellplay_db";
     public static final String USER_TABLE = "Ruser";

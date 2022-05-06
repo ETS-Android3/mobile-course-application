@@ -36,11 +36,14 @@ public class PlayerFragment extends Fragment {
         //get navigation args
         int songIndex = getArguments() != null ? getArguments().getInt("songIndex") : -1;
 
+        if (songIndex > 0){
+            mediaPlayerManager.setPlaylist(-1, getContext());
+        }
         if(mediaPlayerManager.isPlaying() && mediaPlayerManager.getCurrentSongIndex() == songIndex){
-            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()[mediaPlayerManager.getCurrentSongIndex()];
+            currentSong = mediaPlayerManager.getCurrentlyPlaying().get(mediaPlayerManager.getCurrentSongIndex());
             mediaUIInit();
         }else if (songIndex == -1) {
-            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()[mediaPlayerManager.getCurrentSongIndex()];
+            currentSong = mediaPlayerManager.getCurrentlyPlaying().get(mediaPlayerManager.getCurrentSongIndex());
             mediaUIInit();
         } else {
             mediaPlayerInit(songIndex);
@@ -74,7 +77,7 @@ public class PlayerFragment extends Fragment {
 
         binding.btnNext.setOnClickListener(view -> {
             if (mediaPlayerManager.isShuffle()){
-                int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().length);
+                int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentlyPlaying().size());
                 mediaPlayerInit(randomIndex);
             }else{
                 mediaPlayerInit(mediaPlayerManager.getCurrentSongIndex()+1);
@@ -112,7 +115,7 @@ public class PlayerFragment extends Fragment {
         //mediaPlayer init
         mediaPlayerManager.setMediaPlayer(getContext(), position);
         mediaPlayerManager.play();
-        currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()[position];
+        currentSong = mediaPlayerManager.getCurrentlyPlaying().get(position);
         mediaUIInit();
 
         mediaPlayerManager.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -124,7 +127,7 @@ public class PlayerFragment extends Fragment {
                     mediaPlayerManager.getMediaPlayer().start();
                 }
                 else if (mediaPlayerManager.isShuffle()){
-                    int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().length);
+                    int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentlyPlaying().size());
                     mediaPlayerInit(randomIndex);
                 }
                 else{

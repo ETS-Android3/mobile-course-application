@@ -2,9 +2,10 @@ package com.example.mobile30_03.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = "uri", unique = true)})
 public class RSong {
     @PrimaryKey(autoGenerate = true)
     public int songId;

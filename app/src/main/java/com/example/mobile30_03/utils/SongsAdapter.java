@@ -21,18 +21,27 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile30_03.R;
+import com.example.mobile30_03.database.RPlaylist;
 import com.example.mobile30_03.database.RSong;
 import com.example.mobile30_03.fragment.SongsFragmentDirections;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.List;
+
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHolder> {
     private static final String TAG = "SongsAdapter";
-    private final RSong[] songs;
+    private final List<RSong> songs;
     private final int mNumberItems;
 
-    public SongsAdapter() {
-        songs = MediaPlayerManager.getInstance().getCurrentPlaylist().getSongs();
-        mNumberItems = songs.length;
+    public SongsAdapter(List<RSong> songs) {
+        this.songs = songs;
+        mNumberItems = songs.size();
+    }
+
+    public void setSongs(List<RSong> songs) {
+        this.songs.clear();
+        this.songs.addAll(songs);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -45,11 +54,11 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
-        RSong music = songs[position];
+        RSong music = songs.get(position);
         holder.ivAlbumArt.setImageBitmap(HelperFunctions.getBitmapFromContentURI(holder.itemView.getContext(), Uri.parse(music.uri)));
-        holder.tvSongName.setText(songs[position].name);
-        holder.tvDuration.setText(HelperFunctions.milliSecondsToTimer(songs[position].duration));
-        holder.tvArtistName.setText(songs[position].artist);
+        holder.tvSongName.setText(music.name);
+        holder.tvDuration.setText(HelperFunctions.milliSecondsToTimer(music.duration));
+        holder.tvArtistName.setText(music.artist);
 
         holder.ivSongMore.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.ivSongMore);
@@ -67,7 +76,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
                         popupWindow.showAsDropDown(holder.ivSongMore);
 
                         RecyclerView rv = view2.findViewById(R.id.rvAddPlaylist);
-                        rv.setAdapter(new AddPlaylistAdapter(songs[position], popupWindow));
+                        rv.setAdapter(new AddPlaylistAdapter(music, popupWindow));
                         rv.setHasFixedSize(true);
                         rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(holder.itemView.getContext()));
 
@@ -76,7 +85,7 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
                         shareSong(holder.itemView.getContext(), Uri.parse(music.uri));
                         break;
                     case R.id.action_delete:
-                        Snackbar.make(holder.itemView, "Are you sure you want to delete " + songs[position].name+" ?", Snackbar.LENGTH_INDEFINITE)
+                        Snackbar.make(holder.itemView, "Are you sure you want to delete " + music.name+" ?", Snackbar.LENGTH_LONG)
                                 .setActionTextColor(Color.RED)
                                 .setAction("Yes, delete it", view1 -> {
                                     deleteSong(holder.itemView.getContext(), Uri.parse(music.uri));

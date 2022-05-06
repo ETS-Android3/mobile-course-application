@@ -96,6 +96,7 @@ public class HomeActivity extends AppCompatActivity {
                     Intent intent = new Intent(HomeActivity.this, WellPlayedActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
+                    finish();
                 }
             }
         }, 400);
