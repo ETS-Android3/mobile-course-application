@@ -1,14 +1,14 @@
 package com.example.mobile30_03.models;
 
-import java.util.List;
+import com.example.mobile30_03.database.RSong;
 
 public class Playlist {
     private String name;
     private String description;
     private int artworkUrl;
-    private List<Music> songs;
+    private RSong[] songs;
 
-    public Playlist(String name, String description, int artworkUrl, List<Music> songs) {
+    public Playlist(String name, String description, int artworkUrl, RSong[] songs) {
         this.name = name;
         this.description = description;
         this.artworkUrl = artworkUrl;
@@ -27,14 +27,9 @@ public class Playlist {
         return artworkUrl;
     }
 
-    public List<Music> getSongs() {
+    public RSong[] getSongs() {
         return songs;
     }
-
-    public int getSongCount() {
-        return songs.size();
-    }
-
 
     public void setName(String name) {
         this.name = name;
@@ -48,7 +43,8 @@ public class Playlist {
         this.artworkUrl = artworkUrl;
     }
 
-    public void setSongs(List<Music> songs) {
+    public void setSongs(RSong[] songs) {
         this.songs = songs;
     }
+
 }

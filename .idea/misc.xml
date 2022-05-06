@@ -28,19 +28,21 @@
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/activity_player.xml" value="0.1" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/activity_well_played.xml" value="0.1834117144078666" />
-        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/add_to_playlist.xml" value="0.25729166666666664" />
-        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/c_playlist_item.xml" value="0.33" />
-        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/c_song_item.xml" value="0.67" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/add_to_playlist.xml" value="0.264" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/c_add_item.xml" value="0.536" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/c_add_playlist_item.xml" value="0.1834117144078666" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/c_playlist_item.xml" value="0.536" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/c_song_item.xml" value="0.536" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/content_main.xml" value="0.16757246376811594" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/fragment_music_list.xml" value="0.2234375" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/fragment_player.xml" value="0.2234375" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/fragment_playlist.xml" value="0.176" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/fragment_show_playlist.xml" value="0.1834117144078666" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/fragment_songs.xml" value="0.1834117144078666" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/popup_new_playlist.xml" value="0.264" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/layout/song_item.xml" value="0.264" />
-        <entry key="..\:/Works/mobile-course-application/app/src/main/res/menu/add_to_playlist_popup.xml" value="0.25729166666666664" />
         <entry key="..\:/Works/mobile-course-application/app/src/main/res/menu/player_bottom_navigation_menu.xml" value="0.1834117144078666" />
-        <entry key="..\:/Works/mobile-course-application/app/src/main/res/menu/playlist_more_popup.xml" value="0.121875" />
-        <entry key="..\:/Works/mobile-course-application/app/src/main/res/menu/song_more_popup.xml" value="0.18" />
+        <entry key="..\:/Works/mobile-course-application/app/src/main/res/menu/playlist_fragment_toolbar_menu.xml" value="0.4" />
       </map>
     </option>
   </component>

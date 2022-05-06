@@ -1,12 +1,11 @@
 package com.example.mobile30_03.utils;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
-
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,20 +21,18 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile30_03.R;
+import com.example.mobile30_03.database.RSong;
 import com.example.mobile30_03.fragment.SongsFragmentDirections;
-import com.example.mobile30_03.models.Music;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.List;
 
 public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHolder> {
     private static final String TAG = "SongsAdapter";
-    private final List<Music> songs;
+    private final RSong[] songs;
     private final int mNumberItems;
 
-    public SongsAdapter( List<Music> rvSongs) {
-        mNumberItems = rvSongs.size();
-        songs = rvSongs;
+    public SongsAdapter() {
+        songs = MediaPlayerManager.getInstance().getCurrentPlaylist().getSongs();
+        mNumberItems = songs.length;
     }
 
     @NonNull
@@ -48,11 +45,11 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MusicViewHolder holder, int position) {
-        Music music = songs.get(position);
-        holder.ivAlbumArt.setImageBitmap(HelperFunctions.getBitmapFromContentURI(holder.itemView.getContext(), music.getUri()));
-        holder.tvSongName.setText(songs.get(position).getSong_name());
-        holder.tvDuration.setText(HelperFunctions.milliSecondsToTimer(songs.get(position).getDuration()));
-        holder.tvArtistName.setText(songs.get(position).getArtist_name());
+        RSong music = songs[position];
+        holder.ivAlbumArt.setImageBitmap(HelperFunctions.getBitmapFromContentURI(holder.itemView.getContext(), Uri.parse(music.uri)));
+        holder.tvSongName.setText(songs[position].name);
+        holder.tvDuration.setText(HelperFunctions.milliSecondsToTimer(songs[position].duration));
+        holder.tvArtistName.setText(songs[position].artist);
 
         holder.ivSongMore.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.ivSongMore);
@@ -68,18 +65,23 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
                         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                         popupWindow.setFocusable(true);
                         popupWindow.showAsDropDown(holder.ivSongMore);
-                        //TODO: add to playlist
+
+                        RecyclerView rv = view2.findViewById(R.id.rvAddPlaylist);
+                        rv.setAdapter(new AddPlaylistAdapter(songs[position], popupWindow));
+                        rv.setHasFixedSize(true);
+                        rv.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(holder.itemView.getContext()));
+
                         break;
                     case R.id.action_share:
-                        shareSong(holder.itemView.getContext(), music.getUri());
+                        shareSong(holder.itemView.getContext(), Uri.parse(music.uri));
                         break;
                     case R.id.action_delete:
-                        Snackbar.make(holder.itemView, "Are you sure you want to delete " + songs.get(position).getSong_name() +" ?", Snackbar.LENGTH_INDEFINITE)
+                        Snackbar.make(holder.itemView, "Are you sure you want to delete " + songs[position].name+" ?", Snackbar.LENGTH_INDEFINITE)
                                 .setActionTextColor(Color.RED)
                                 .setAction("Yes, delete it", view1 -> {
-                                    Toast.makeText(holder.itemView.getContext(), "Permission problems.. ", Toast.LENGTH_SHORT).show();
-                                })
-                                .show();
+                                    deleteSong(holder.itemView.getContext(), Uri.parse(music.uri));
+                                }).show();
+
                         break;
                     default:
                         break;
@@ -94,6 +96,19 @@ public class SongsAdapter extends RecyclerView.Adapter<SongsAdapter.MusicViewHol
             Navigation.findNavController(view).navigate(action);
         });
 
+    }
+
+    private void deleteSong(Context context, Uri uri) {
+        //delete song from device if it is below android 11
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            try {
+                ContentResolver contentResolver = context.getContentResolver();
+                contentResolver.delete(uri, null, null);
+                Toast.makeText(context, "Song deleted", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

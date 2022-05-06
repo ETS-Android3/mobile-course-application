@@ -2,9 +2,11 @@ package com.example.mobile30_03.utils;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
-import com.example.mobile30_03.R;
-import com.example.mobile30_03.models.Music;
+import com.example.mobile30_03.database.AppDatabase;
+import com.example.mobile30_03.database.RPlaylist;
+import com.example.mobile30_03.database.RSong;
 import com.example.mobile30_03.models.Playlist;
 
 import java.util.List;
@@ -15,8 +17,9 @@ public class MediaPlayerManager {
     private boolean isShuffle;
     private boolean isLooping;
     private int currentSongIndex;
-    private List<Music> allSongs;
+    private List<RSong> allRSongs;
     private Playlist currentPlaylist;
+    private List<RPlaylist> allRPlaylists;
 
     private MediaPlayerManager() {
         mediaPlayer = new MediaPlayer();
@@ -50,7 +53,7 @@ public class MediaPlayerManager {
             e.printStackTrace();
         }
         this.currentSongIndex = index;
-        this.mediaPlayer = MediaPlayer.create(context, currentPlaylist.getSongs().get(index).getUri());
+        this.mediaPlayer = MediaPlayer.create(context, Uri.parse(currentPlaylist.getSongs()[index].uri));
     }
 
     public boolean isShuffle() {
@@ -73,10 +76,6 @@ public class MediaPlayerManager {
         return currentSongIndex;
     }
 
-    public List<Music> getAllSongs() {
-        return allSongs;
-    }
-
     public boolean isPlaying() {
         return mediaPlayer.isPlaying();
     }
@@ -85,16 +84,31 @@ public class MediaPlayerManager {
         return isShuffle;
     }
 
-    public void fetchAllSongs(Context context) {
-        allSongs = HelperFunctions.audioMediaOperations(context);
-        currentPlaylist = new Playlist("All Songs", "All songs on device.", R.drawable.allsong_clip,allSongs);
+    public void updateSonglist(Context context) {
+        AppDatabase db = AppDatabase.getInstance(context);
+        RSong[] rsongs = HelperFunctions.audioMediaOperations(context);
+        db.wpDao().insertSongs(rsongs);
+    }
+
+    public void fetchPlayer(Context context) {
+        AppDatabase db = AppDatabase.getInstance(context);
+        allRSongs = db.wpDao().getAllSongs();
+        allRPlaylists = db.wpDao().getAllPlaylists();
+    }
+
+    public void setCurrentPlaylist(Playlist playlist) {
+        currentPlaylist = playlist;
     }
 
     public Playlist getCurrentPlaylist() {
         return currentPlaylist;
     }
 
-    public void setCurrentPlaylist(Playlist currentPlaylist) {
-        this.currentPlaylist = currentPlaylist;
+    public List<RPlaylist> getAllRPlaylists() {
+        return allRPlaylists;
+    }
+
+    public List<RSong> getAllRSongs() {
+        return allRSongs;
     }
 }

@@ -6,16 +6,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobile30_03.models.Playlist;
+import com.example.mobile30_03.database.RPlaylist;
 import com.example.mobile30_03.databinding.CPlaylistItemBinding;
 
 import java.util.List;
 
 public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.PlaylistViewHolder> {
-    final List<Playlist> playlists;
+    final List<RPlaylist> playlists;
 
-    public PlaylistsAdapter(List<Playlist> playlists) {
-        this.playlists = playlists;
+    public PlaylistsAdapter() {
+        this.playlists = MediaPlayerManager.getInstance().getAllRPlaylists();
     }
 
     @NonNull
@@ -28,7 +28,7 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
-        Playlist playlist = playlists.get(position);
+        RPlaylist playlist = playlists.get(position);
         holder.bind(playlist);
     }
 
@@ -46,14 +46,11 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
             this.binding = binding;
         }
 
-        public void bind(Playlist playlist) {
-            binding.ivPlaylist.setImageResource(playlist.getArtworkUrl());
-            binding.tvPlaylistName.setText(playlist.getName());
-            binding.tvPlaylistDescription.setText(playlist.getDescription());
-            binding.tvPlaylistCount.setText(String.valueOf(playlist.getSongCount()));
+        public void bind(RPlaylist playlist) {
+            binding.ivPlaylist.setImageResource(Integer.parseInt(playlist.artworkUrl));
+            binding.tvPlaylistName.setText(playlist.name);
+            binding.tvPlaylistDescription.setText(playlist.description);
+            binding.tvPlaylistCount.setText(playlist.playlistId);
         }
     }
-
-
-
 }

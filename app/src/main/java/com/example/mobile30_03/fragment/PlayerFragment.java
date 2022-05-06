@@ -3,10 +3,8 @@ package com.example.mobile30_03.fragment;
 import static com.example.mobile30_03.utils.HelperFunctions.milliSecondsToTimer;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.mobile30_03.R;
+import com.example.mobile30_03.database.RSong;
 import com.example.mobile30_03.databinding.FragmentPlayerBinding;
-import com.example.mobile30_03.models.Music;
 import com.example.mobile30_03.utils.HelperFunctions;
 import com.example.mobile30_03.utils.MediaPlayerManager;
 
@@ -27,7 +27,7 @@ public class PlayerFragment extends Fragment {
 
     //Create MediaPlayerManager
     private MediaPlayerManager mediaPlayerManager = MediaPlayerManager.getInstance();
-    Music currentSong;
+    RSong currentSong;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,12 +37,10 @@ public class PlayerFragment extends Fragment {
         int songIndex = getArguments() != null ? getArguments().getInt("songIndex") : -1;
 
         if(mediaPlayerManager.isPlaying() && mediaPlayerManager.getCurrentSongIndex() == songIndex){
-            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()
-                    .get(mediaPlayerManager.getCurrentSongIndex());
+            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()[mediaPlayerManager.getCurrentSongIndex()];
             mediaUIInit();
         }else if (songIndex == -1) {
-            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()
-                .get(mediaPlayerManager.getCurrentSongIndex());
+            currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()[mediaPlayerManager.getCurrentSongIndex()];
             mediaUIInit();
         } else {
             mediaPlayerInit(songIndex);
@@ -55,11 +53,14 @@ public class PlayerFragment extends Fragment {
                 binding.btnPlay.setColorFilter(R.color.blue);
                 handler.removeCallbacks(myUpdater);
                 binding.btnPlay.setImageResource(R.drawable.ic_baseline_play_circle_filled);
-            }else{
+            }else if(!mediaPlayerManager.getMediaPlayer().isPlaying()){
+                if (mediaPlayerManager.getMediaPlayer() == null){
+                }else {
                 mediaPlayerManager.play();
                 binding.btnPlay.clearColorFilter();
                 binding.btnPlay.setImageResource(R.drawable.ic_baseline_pause_circle_filled);
                 updateSeekBar();
+                }
             }
         });
 
@@ -73,7 +74,7 @@ public class PlayerFragment extends Fragment {
 
         binding.btnNext.setOnClickListener(view -> {
             if (mediaPlayerManager.isShuffle()){
-                int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().size());
+                int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().length);
                 mediaPlayerInit(randomIndex);
             }else{
                 mediaPlayerInit(mediaPlayerManager.getCurrentSongIndex()+1);
@@ -111,7 +112,7 @@ public class PlayerFragment extends Fragment {
         //mediaPlayer init
         mediaPlayerManager.setMediaPlayer(getContext(), position);
         mediaPlayerManager.play();
-        currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs().get(position);
+        currentSong = mediaPlayerManager.getCurrentPlaylist().getSongs()[position];
         mediaUIInit();
 
         mediaPlayerManager.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -123,7 +124,7 @@ public class PlayerFragment extends Fragment {
                     mediaPlayerManager.getMediaPlayer().start();
                 }
                 else if (mediaPlayerManager.isShuffle()){
-                    int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().size());
+                    int randomIndex = HelperFunctions.getRandomIndex(mediaPlayerManager.getCurrentPlaylist().getSongs().length);
                     mediaPlayerInit(randomIndex);
                 }
                 else{
@@ -137,11 +138,11 @@ public class PlayerFragment extends Fragment {
 
     private void mediaUIInit() {
         binding.btnPlay.setImageResource(R.drawable.ic_baseline_pause_circle_filled);
-        binding.tvArtistName.setText(currentSong.getArtist_name());
-        binding.tvDurationTotal.setText(milliSecondsToTimer(currentSong.getDuration()));
+        binding.tvArtistName.setText(currentSong.artist);
+        binding.tvDurationTotal.setText(milliSecondsToTimer(currentSong.duration));
         binding.tvDurationCurrent.setText(milliSecondsToTimer(0));
-        binding.tvSongName.setText(currentSong.getSong_name());
-        binding.ivAlbumArt.setImageBitmap(HelperFunctions.getBitmapFromContentURI(getContext(), currentSong.getUri()));
+        binding.tvSongName.setText(currentSong.name);
+        binding.ivAlbumArt.setImageBitmap(HelperFunctions.getBitmapFromContentURI(getContext(), Uri.parse(currentSong.uri)));
 
         if (mediaPlayerManager.isLooping()) binding.btnLoop.clearColorFilter();
         else binding.btnLoop.setColorFilter(R.color.blue);

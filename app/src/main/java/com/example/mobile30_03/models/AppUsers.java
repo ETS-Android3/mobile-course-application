@@ -1,5 +1,10 @@
 package com.example.mobile30_03.models;
 
+import android.content.Context;
+
+import com.example.mobile30_03.database.AppDatabase;
+import com.example.mobile30_03.database.RUser;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +31,17 @@ public class AppUsers {
         users.add(new User("faruk", "faruka", "2222@gmail.com", "4554"));
         users.add(new User("admin2", "admin", "furkanx54x@gmail.com", "5435"));
         users.add(new User("aslihant", "421100", "trhnaslhnt@gmail.com", "5076538444"));
+    }
+
+
+    public void register(Context context, String username, String password, String email, String phone) {
+        AppDatabase db = AppDatabase.getInstance(context);
+        RUser user = new RUser();
+        user.username = username;
+        user.password = password;
+        user.email = email;
+        user.phoneNumber = phone;
+        user.profilePic = "";
     }
 
 

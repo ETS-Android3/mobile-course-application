@@ -16,15 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Playlists"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:background="@color/navy"/>
-
-    </androidx.appcompat.widget.Toolbar>
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlaylists"

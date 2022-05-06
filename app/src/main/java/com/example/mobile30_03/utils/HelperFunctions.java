@@ -9,7 +9,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.example.mobile30_03.models.Music;
+import com.example.mobile30_03.database.RSong;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +36,14 @@ public class HelperFunctions {
         return timerString;
     }
 
-    public static List<Music> audioMediaOperations(Context context){
-        List<Music> songs = new ArrayList<>();
+    public static RSong[] audioMediaOperations(Context context){
+        List<RSong> songs = new ArrayList<>();
 
         Uri collection = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
                 MediaStore.Audio.Media._ID,
                 MediaStore.Audio.Media.ARTIST,
                 MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.DISPLAY_NAME,
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.ALBUM
         };
@@ -63,8 +62,6 @@ public class HelperFunctions {
         )) {
             // Cache column indices.
             int idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID);
-            int displayColumn =
-                    cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
             int songColumn =
                     cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE);
             int artistColumn =
@@ -75,14 +72,13 @@ public class HelperFunctions {
                 long id = cursor.getLong(idColumn);
                 String song_name = cursor.getString(songColumn);
                 String artist_name = cursor.getString(artistColumn);
-                String display_name = cursor.getString(displayColumn);
                 int duration = cursor.getInt(durationColumn);
                 Uri contentUri = ContentUris.withAppendedId(
                         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
-                songs.add(new Music(contentUri, song_name,artist_name,display_name, duration));
+                songs.add(new RSong(contentUri.toString(), song_name, artist_name, duration));
             }
         }
-        return songs;
+        return songs.toArray(new RSong[songs.size()]);
     }
 
     public static Bitmap getBitmapFromContentURI(Context context, Uri uri){

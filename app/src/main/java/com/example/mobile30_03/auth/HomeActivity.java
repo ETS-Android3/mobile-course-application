@@ -85,12 +85,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //Do something after 5 seconds
-                MediaPlayerManager.getInstance().fetchAllSongs(getApplicationContext());
-                if (MediaPlayerManager.getInstance().getAllSongs().size() < 1){
-                    Snackbar.make(findViewById(R.id.activity_home), "No songs found. Please download and/or transfer some songs to the device.", Snackbar.LENGTH_SHORT)
+                MediaPlayerManager.getInstance().fetchPlayer(getApplicationContext());
+                if (MediaPlayerManager.getInstance().getAllRSongs().size() < 1){
+                    Snackbar.make(findViewById(R.id.activity_home), "No songs found. We will try to recheck while you download/transfer some mp3 files.", Snackbar.LENGTH_SHORT)
                             .setBackgroundTint(Color.RED)
                             .setTextColor(Color.WHITE)
                             .show();
+                    MediaPlayerManager.getInstance().updateSonglist(getApplicationContext());
                 }else{
                     Intent intent = new Intent(HomeActivity.this, WellPlayedActivity.class);
                     intent.putExtra("user", user);
